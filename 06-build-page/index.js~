@@ -46,7 +46,7 @@ export const htmlBuild = async () => {
                 let component
                 const readStream = createReadStream( join(dirPath, from, fileName))
                 const writeStream = createWriteStream( join(dirPath, folder, to))
-
+                
                 readStream.on('data', chunk => {
                     component += chunk
                 })
