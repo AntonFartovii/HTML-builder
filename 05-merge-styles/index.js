@@ -6,7 +6,8 @@ const url = import.meta.url
 
 // Запустите в консоли: node 05-merge-styles
 
-export const bundle = async () => {
+export const createBundle = async ( fileName, url ) => {
+
     const dirPath = getDir( url )
     const from = 'styles'
     const to = 'project-dist'
@@ -15,9 +16,9 @@ export const bundle = async () => {
     await mkdir( join(dirPath, to), { recursive: true })
 
     try {
-        const fileList = await readdir( join(dirPath, from))
+        const fileList = await readdir( join(dirPath, from) )
         let readStream
-        const writeStream = createWriteStream( join(dirPath, to, 'bundle.css') )
+        const writeStream = createWriteStream( join(dirPath, to, fileName) )
         writeStream.write('')
 
         fileList.forEach( file => {
@@ -35,11 +36,11 @@ export const bundle = async () => {
         })
 
     } catch (e) {
-
+        console.log('Нешта здарылася!')
     }
 }
 
-await bundle()
+await createBundle('bundle.css', url)
 
 // После завершения работы скрипта в папке project-dist должен
 // находиться файл bundle.css содержащий стили из всех файлов папки styles.
