@@ -6,10 +6,8 @@ const url = import.meta.url
 
 // Запустите в консоли: node 04-copy-directory
 
-export const copyDir = async () => {
+export const copyDir = async ( url, from, to ) => {
     const dirPath = getDir( url )
-    const from = 'files'
-    const to = 'files_copy'
 
     try {
         // Чтение содержимого папки files
@@ -39,4 +37,4 @@ export const copyDir = async () => {
     }
 }
 
-await copyDir()
+await copyDir( url, 'files', 'files-copy')
