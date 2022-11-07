@@ -1,5 +1,5 @@
 import {getDir} from "../utils/getPathFromFiles.js";
-import {join, extname} from 'path'
+import {join} from 'path'
 import {stat} from 'fs'
 import {readdir} from "fs/promises";
 const url = import.meta.url
@@ -25,7 +25,7 @@ export const lsDir = async () => {
             }
         })
     } catch (e) {
-
+        console.log( e )
     }
 }
 

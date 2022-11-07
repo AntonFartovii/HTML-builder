@@ -1,7 +1,6 @@
 import {createReadStream} from 'fs'
 import {getPathFromFiles} from "../utils/getPathFromFiles.js";
 
-
 // node 01-read-file
 export const read = async () => {
     try {
