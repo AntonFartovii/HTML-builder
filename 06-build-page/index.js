@@ -29,13 +29,14 @@ export const htmlBuild = async () => {
         new Promise( (res, rej) => {
             const readStream = createReadStream( join(dirPath, fileName),  {encoding:'utf-8'} )
 
-            let data;
+            let data = ''
             readStream.on('data', chunk => {
                 data = data + chunk
             })
 
             readStream.on('end', () => {
-                res(data)
+                console.log( data )
+                res(data.trim())
             })
         }).then( async (data) => {
             const fileList = await readdir(join(dirPath, from))
@@ -43,7 +44,7 @@ export const htmlBuild = async () => {
             for (let key in fileList) {
                 const fileName = fileList[key]
 
-                let component
+                let component = ''
                 const readStream = createReadStream( join(dirPath, from, fileName))
                 const writeStream = createWriteStream( join(dirPath, folder, to))
 
@@ -52,15 +53,15 @@ export const htmlBuild = async () => {
                 })
 
                 readStream.on('end', () => {
-                    data = data.replace('{{' + fileName.split('.')[0] + '}}', component)
+                    data = data.replace(`{{${fileName.split('.')[0]}}}`, component)
                     readStream.close()
                 })
 
                 readStream.on('close', () => {
                     writeStream.write( data )
                 })
-            }
 
+            }
         })
     } catch (e) {
 
