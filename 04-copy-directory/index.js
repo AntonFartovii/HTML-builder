@@ -1,5 +1,5 @@
 import {getDir} from "../utils/getPathFromFiles.js";
-import {readdir, mkdir} from "fs/promises"
+import {readdir, mkdir, rm} from "fs/promises"
 import {createReadStream, createWriteStream} from "fs";
 import {join} from "path"
 const url = import.meta.url
@@ -10,6 +10,7 @@ export const copyDir = async ( url, from, to ) => {
     const dirPath = getDir( url )
 
     try {
+        await rm( join(dirPath, to ), {recursive: true, force: true});
         // Чтение содержимого папки files
         const filesList = await readdir ( join(dirPath, from ))
 
