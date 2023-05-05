@@ -12,18 +12,16 @@ export const lsDir = async () => {
     const src = join( dirPath, 'secret-folder' )
 
     try {
-        const objList = await readdir( src, {withFileTypes: true})
+        const files = await readdir( src, {withFileTypes: true})
 
-        objList.forEach( obj => {
-            if (obj.isFile()) {
-                const nameArr = obj.name.split('.')
+        for( const file of files)
 
-                stat( join( src, obj.name ), (errors, stats) => {
-                    nameArr.push((stats.size/1024).toFixed(3)+'kb')
-                    console.log( nameArr.join('-'))
-                })
+            if (file.isFile()) {
+
+                const fileStats = await stat(file)
+
             }
-        })
+
     } catch (e) {
         console.log( e )
     }
