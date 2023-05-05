@@ -1,6 +1,6 @@
-import {getDir} from "../utils/getPathFromFiles.js";
+import {getDir} from '../utils/getPathFromFiles.js';
 import {join, resolve} from 'path';
-import {readdir, stat} from "fs/promises";
+import {readdir, stat} from 'fs/promises';
 const url = import.meta.url;
 
 // Запустите в консоли: node 03-files-in-folder
@@ -11,7 +11,7 @@ export const lsDir = async (folderName) => {
 
     try {
       const objList = await readdir(src, {withFileTypes: true});
-      for(const obj of objList)
+      for(const obj of objList) {
         if (obj.isFile()) {
           const fileInfo = obj.name.split('.');
           const fileStats = await stat(resolve(src, obj.name));
@@ -19,11 +19,12 @@ export const lsDir = async (folderName) => {
           fileInfo.push(fileSize);
           console.log(fileInfo.join(' - '));
         }
+      }
     } catch (e) {
         console.log(e);
     }
 }
-await lsDir('secret-folder')
+await lsDir('secret-folder');
 
 // Данные должны быть выведены в формате <имя файла>-<расширение файла>-<вес файла>.
 // Пример: example - txt - 128.369kb
