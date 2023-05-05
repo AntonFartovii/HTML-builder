@@ -5,9 +5,8 @@ import {createReadStream, createWriteStream} from 'fs';
 const url = import.meta.url;
 
 // Запустите в консоли: node 05-merge-styles
-export const createBundle = async (url, from, to) => {
+export const createBundle = async (url, from, to, bundleName = 'bundle.css') => {
   const dirPath = getDir(url);
-  const fileName = 'bundle.css';
   const pathFrom = join(dirPath, from);
   const pathTo = join(dirPath, to);
 
@@ -16,7 +15,7 @@ export const createBundle = async (url, from, to) => {
   try {
     const objList = await readdir(pathFrom, {withFileTypes: true});
     let readStream;
-    const writeStream = createWriteStream(join(pathTo, fileName));
+    const writeStream = createWriteStream(join(pathTo, bundleName));
     writeStream.write('');
 
     for(const obj of objList) {
