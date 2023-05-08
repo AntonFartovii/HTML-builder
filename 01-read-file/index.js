@@ -3,7 +3,9 @@ import {getFilePath} from '../utils/getFilePath.js';
 import { stdout } from 'node:process';
 const url = import.meta.url;
 
+// Commands:
 // node 01-read-file
+// npm run 1
 export const read = async (filename) => {
   const error = new Error('FS operation failed');
 
@@ -15,12 +17,12 @@ export const read = async (filename) => {
     });
     readStream.on('end', () => {
       stdout.end();
-    })
+    });
     readStream.on('error', () => {
       throw error;
-    })
+    });
   } catch {
     throw error;
   }
-}
-await read('text.txt');
+};
+read('text.txt');

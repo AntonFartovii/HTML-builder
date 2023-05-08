@@ -1,13 +1,15 @@
-import {getDir} from '../utils/getPathFromFiles.js';
 import {readdir, mkdir, rm} from 'fs/promises';
 import {createReadStream, createWriteStream} from 'fs';
 import {join} from 'path';
+import {getDirPath} from '../utils/getFilePath.js';
 const url = import.meta.url;
 
-// Запустите в консоли: node 04-copy-directory
+// Commands:
+// node 04-copy-directory
+// npm run 4
 export const copyDir = async (url, from, to) => {
   const error = new Error('FS operation failed');
-  const dirPath = getDir(url);
+  const dirPath = getDirPath(url);
   const pathFrom = join(dirPath, from);
   const pathTo = join(dirPath, to);
 
@@ -32,12 +34,12 @@ export const copyDir = async (url, from, to) => {
       } else if(obj.isDirectory()) {
         await mkdir(join(pathTo, obj.name), {recursive: true});
         // recursive copy inner folders
-        await copyDir(url, join(from, obj.name), join(to, obj.name))
+        await copyDir(url, join(from, obj.name), join(to, obj.name));
       }
     }
   } catch {
-     throw error;
+    throw error;
   }
-}
+};
 
-await copyDir(url, 'files', 'files-copy');
+copyDir(url, 'files', 'files-copy');

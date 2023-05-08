@@ -1,38 +1,41 @@
 import {createWriteStream} from 'fs';
-import * as readline from 'node:readline';
-import process, { stdin as input, stdout as output } from 'node:process';
+import {createInterface} from 'node:readline';
+import {stdin as input, stdout as output} from 'node:process';
 import {getFilePath} from '../utils/getFilePath.js';
 const url = import.meta.url;
 
+// Commands:
 // node 02-write-file
+// npm run 2
 export const write = async (filename) => {
   const error = new Error('FS operation failed');
 
   try {
-    const rl = readline.createInterface({
-      input,
-      output,
-    });
-
+    const readLine = createInterface({input, output,});
     const filePath = getFilePath(url, filename);
     const stream = await createWriteStream(filePath);
 
-    process.stdout.write('Напишите что-нибудь в файл:\n');
-    rl.on('SIGINT', () => rl.close());
-    rl.on('line',(data) => {
+    output.write('Напишите что-нибудь в файл:\n');
+    readLine.on('SIGINT', () => {
+      readLine.close();
+    });
+
+    readLine.on('line',(data) => {
       data.toString().trim() === 'exit' ?
-          rl.close() :
-          stream.write(data+'\n')
+        readLine.close() :
+        stream.write(data+'\n');
     });
-    rl.on('error', () => {
-      throw error
+
+    readLine.on('error', () => {
+      throw error;
     });
-    rl.on('close', () => {
-      process.stdout.write('Да пабачэння!\n');
+
+    readLine.on('close', () => {
+      output.write('Да пабачэння!\n');
     });
   } catch {
-    throw error
+    throw error;
   }
-}
+};
 
-await write('text.txt')
+write('text.txt');

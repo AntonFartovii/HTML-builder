@@ -1,3 +1,16 @@
+### Привет проверяющий:  
+Команда для выполнения:
+```
+    package.json
+    "1": "node 01-read-file",
+    "2": "node 02-write-file",
+    "3": "node 03-files-in-folder",
+    "4": "node 04-copy-directory",
+    "5": "node 05-merge-styles",
+    "6": "node 06-build-page",
+    "lint": "eslint . --ext .js"
+```
+
 # HTML builder
 ---
 

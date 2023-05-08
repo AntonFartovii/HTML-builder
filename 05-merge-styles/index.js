@@ -1,12 +1,14 @@
 import {mkdir, readdir} from 'fs/promises';
-import {getDir} from '../utils/getPathFromFiles.js';
-import {join, extname} from 'path'
+import {join} from 'path';
 import {createReadStream, createWriteStream} from 'fs';
+import {getDirPath} from '../utils/getFilePath.js';
 const url = import.meta.url;
 
-// Запустите в консоли: node 05-merge-styles
+// Commands:
+// node 05-merge-styles
+// nmp run 5
 export const createBundle = async (url, from, to, bundleName = 'bundle.css') => {
-  const dirPath = getDir(url);
+  const dirPath = getDirPath(url);
   const pathFrom = join(dirPath, from);
   const pathTo = join(dirPath, to);
 
@@ -23,7 +25,7 @@ export const createBundle = async (url, from, to, bundleName = 'bundle.css') => 
         const ext = obj.name.split('.')[1];
         if (ext === 'css') {
           writeStream.write('\n');
-          readStream = createReadStream(join(pathFrom, obj.name))
+          readStream = createReadStream(join(pathFrom, obj.name));
           readStream.on('data', (chunk) => {
             writeStream.write(chunk);
           });
@@ -33,10 +35,10 @@ export const createBundle = async (url, from, to, bundleName = 'bundle.css') => 
     readStream.on('end', () => {
       writeStream.end();
     });
-    } catch (e) {
-      console.log('Нешта здарылася!');
-    }
-}
-await createBundle(url, 'styles', 'project-dist');
+  } catch (e) {
+    console.log('Нешта здарылася!');
+  }
+};
+createBundle(url, 'styles', 'project-dist');
 // После завершения работы скрипта в папке project-dist должен
 // находиться файл bundle.css содержащий стили из всех файлов папки styles.
