@@ -22,7 +22,7 @@ export const createBundle = async (url, from, to, bundleName = 'bundle.css') => 
 
     for(const obj of objList) {
       if (obj.isFile()) {
-        const ext = obj.name.split('.')[1];
+        const ext = obj.name.split('.').at(-1);
         if (ext === 'css') {
           writeStream.write('\n');
           readStream = createReadStream(join(pathFrom, obj.name));
