@@ -16,7 +16,7 @@ export const lsDir = async (folderName) => {
       if (obj.isFile()) {
         const fileInfo = obj.name.split('.');
         const fileStats = await stat(resolve(src, obj.name));
-        const fileSize = (fileStats.size/1024).toFixed(3)+'kb';
+        const fileSize = (fileStats.size/1000).toFixed(3)+'kb';
         fileInfo.push(fileSize);
         console.log(fileInfo.join(' - '));
       }
